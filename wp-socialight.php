@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP-SociaLight
 Plugin URI: http://savvy.co.il
-Description: מציג כפתורי שיתוף לרשתות חברתיות באתרי וורדפרס
+Description: WP-Socialight is a simple, lightweight social share plugin that will increase the interaction on your website.
 Version: 2.3
 Author: Roee Yossef - Savvy.co.il
 */
