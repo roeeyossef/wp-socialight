@@ -44,7 +44,6 @@ function wp_socialight_settings() {
     add_settings_field("wp-socialight-mail", "Mail", "wp_socialight_mail_checkbox", "wp-socialight", "wp_socialight_config_section");
     add_settings_field("wp-socialight-home", "Show on Homepage?", "wp_socialight_home_checkbox", "wp-socialight", "wp_socialight_config_section");
     add_settings_field("wp-socialight-pages", "Show on all Pages?", "wp_socialight_pages_checkbox", "wp-socialight", "wp_socialight_config_section");
-    add_settings_field("wp-socialight-ltr", "Activate English Version (LTR)?", "wp_socialight_ltr_checkbox", "wp-socialight", "wp_socialight_config_section");
 
     register_setting("wp_socialight_config_section", "wp-socialight-facebook");
     register_setting("wp_socialight_config_section", "wp-socialight-twitter");
@@ -55,7 +54,6 @@ function wp_socialight_settings() {
     register_setting("wp_socialight_config_section", "wp-socialight-mail");
     register_setting("wp_socialight_config_section", "wp-socialight-home");
     register_setting("wp_socialight_config_section", "wp-socialight-pages");
-    register_setting("wp_socialight_config_section", "wp-socialight-ltr");
 }
 
 function wp_socialight_facebook_checkbox() {
@@ -103,16 +101,11 @@ function wp_socialight_pages_checkbox() {
         <input type="checkbox" name="wp-socialight-pages" value="1" <?php checked(1, get_option('wp-socialight-pages'), true); ?> /> Check the box to activate
    <?php
 }
-function wp_socialight_ltr_checkbox() {
-   ?>
-        <input type="checkbox" name="wp-socialight-ltr" value="1" <?php checked(1, get_option('wp-socialight-ltr'), true); ?> /> Check the box to activate
-   <?php
-}
 
 add_action("admin_init", "wp_socialight_settings");
 
 function add_wp_socialight_icons() {
-    if(get_option("wp-socialight-ltr") == 1) {
+    if(!is_rtl()) {
       $html = "<div class='wp-socialight-wrapper wp-socialight-ltr'><ul class='wp-socialight-wrapper-list'><li class='share-on'>Share</li>";
     }
     else {
