@@ -105,12 +105,9 @@ function wp_socialight_pages_checkbox() {
 add_action("admin_init", "wp_socialight_settings");
 
 function add_wp_socialight_icons() {
-    if(!is_rtl()) {
-      $html = "<div class='wp-socialight-wrapper wp-socialight-ltr'><ul class='wp-socialight-wrapper-list'><li class='share-on'>Share</li>";
-    }
-    else {
-      $html = "<div class='wp-socialight-wrapper'><ul class='wp-socialight-wrapper-list'><li class='share-on'>שיתוף</li>";
-    }
+            $ltr_class = is_rtl() ? "" : "wp-socialight-ltr";
+            $html = "<div class='wp-socialight-wrapper $ltr_class'><ul class='wp-socialight-wrapper-list'><li class='share-on'>Share</li>";
+
             global $post;
 
             $url = get_permalink($post->ID);
