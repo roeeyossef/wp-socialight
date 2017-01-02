@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP-SociaLight
 Plugin URI: http://savvy.co.il
-Description: מציג כפתורי שיתוף לרשתות חברתיות באתרי וורדפרס
+Description: WP-Socialight is a simple, lightweight social share plugin that will increase the interaction on your website.
 Version: 2.3
 Author: Roee Yossef - Savvy.co.il
 */
@@ -44,7 +44,6 @@ function wp_socialight_settings() {
     add_settings_field("wp-socialight-mail", "Mail", "wp_socialight_mail_checkbox", "wp-socialight", "wp_socialight_config_section");
     add_settings_field("wp-socialight-home", "Show on Homepage?", "wp_socialight_home_checkbox", "wp-socialight", "wp_socialight_config_section");
     add_settings_field("wp-socialight-pages", "Show on all Pages?", "wp_socialight_pages_checkbox", "wp-socialight", "wp_socialight_config_section");
-    add_settings_field("wp-socialight-ltr", "Activate English Version (LTR)?", "wp_socialight_ltr_checkbox", "wp-socialight", "wp_socialight_config_section");
 
     register_setting("wp_socialight_config_section", "wp-socialight-facebook");
     register_setting("wp_socialight_config_section", "wp-socialight-twitter");
@@ -55,7 +54,6 @@ function wp_socialight_settings() {
     register_setting("wp_socialight_config_section", "wp-socialight-mail");
     register_setting("wp_socialight_config_section", "wp-socialight-home");
     register_setting("wp_socialight_config_section", "wp-socialight-pages");
-    register_setting("wp_socialight_config_section", "wp-socialight-ltr");
 }
 
 function wp_socialight_facebook_checkbox() {
@@ -103,21 +101,13 @@ function wp_socialight_pages_checkbox() {
         <input type="checkbox" name="wp-socialight-pages" value="1" <?php checked(1, get_option('wp-socialight-pages'), true); ?> /> Check the box to activate
    <?php
 }
-function wp_socialight_ltr_checkbox() {
-   ?>
-        <input type="checkbox" name="wp-socialight-ltr" value="1" <?php checked(1, get_option('wp-socialight-ltr'), true); ?> /> Check the box to activate
-   <?php
-}
 
 add_action("admin_init", "wp_socialight_settings");
 
 function add_wp_socialight_icons() {
-    if(get_option("wp-socialight-ltr") == 1) {
-      $html = "<div class='wp-socialight-wrapper wp-socialight-ltr'><ul class='wp-socialight-wrapper-list'><li class='share-on'>Share</li>";
-    }
-    else {
-      $html = "<div class='wp-socialight-wrapper'><ul class='wp-socialight-wrapper-list'><li class='share-on'>שיתוף</li>";
-    }
+            $ltr_class = is_rtl() ? "" : "wp-socialight-ltr";
+            $html = "<div class='wp-socialight-wrapper $ltr_class'><ul class='wp-socialight-wrapper-list'><li class='share-on'>Share</li>";
+
             global $post;
 
             $url = get_permalink($post->ID);
@@ -126,35 +116,34 @@ function add_wp_socialight_icons() {
 
             if(get_option("wp-socialight-facebook") == 1)
             {
-                $html = $html . "<li class='socialIcon fb'><a target='_blank' title='פייסבוק' href='http://www.facebook.com/sharer.php?u=" . $url . "'><span class='socicon socicon-facebook'></span></a></li>";
+                $html = $html . "<li class='socialIcon fb'><a target='_blank' title='Facebook' href='http://www.facebook.com/sharer.php?u=" . $url . "'><span class='socicon socicon-facebook'></span></a></li>";
             }
             if(get_option("wp-socialight-twitter") == 1)
             {
-                $html = $html . "<li class='socialIcon tw'><a target='_blank' title='טוויטר' href='https://twitter.com/share?url=" . $url . "'><span class='socicon socicon-twitter'></span></a></li>";
+                $html = $html . "<li class='socialIcon tw'><a target='_blank' title='Twitter' href='https://twitter.com/share?url=" . $url . "'><span class='socicon socicon-twitter'></span></a></li>";
             }
             if(get_option("wp-socialight-linkedin") == 1)
             {
-                $html = $html . "<li class='socialIcon ld'><a target='_blank' title='לינקדין' href='http://www.linkedin.com/shareArticle?url=" . $url . "'><span class='socicon socicon-linkedin'></span></a></li>";
+                $html = $html . "<li class='socialIcon ld'><a target='_blank' title='Linkedin' href='http://www.linkedin.com/shareArticle?url=" . $url . "'><span class='socicon socicon-linkedin'></span></a></li>";
             }
             if(get_option("wp-socialight-google") == 1)
             {
-                $html = $html . "<li class='socialIcon gg'><a target='_blank' title='גוגל+' href='https://plus.google.com/share?url=" . $url . "'><span class='socicon socicon-google'></span></a></li>";
+                $html = $html . "<li class='socialIcon gg'><a target='_blank' title='Google+' href='https://plus.google.com/share?url=" . $url . "'><span class='socicon socicon-google'></span></a></li>";
             }
             if(get_option("wp-socialight-buffer") == 1)
             {
-                $html = $html . "<li class='socialIcon bf'><a target='_blank' title='באפר' href='https://buffer.com/add?url=" . $url . "'><span class='socicon socicon-buffer'></span></a></li>";
+                $html = $html . "<li class='socialIcon bf'><a target='_blank' title='Buffer' href='https://buffer.com/add?url=" . $url . "'><span class='socicon socicon-buffer'></span></a></li>";
             }
             if(get_option("wp-socialight-mail") == 1)
             {
-                $html = $html . "<li class='socialIcon ml'><a class='ban_popup' title='מייל' href='mailto:?subject=Check this out...&body=Link -&nbsp;" . $url . "'><span class='socicon socicon-mail'></span></a></li>";
+                $html = $html . "<li class='socialIcon ml'><a class='ban_popup' title='Email' href='mailto:?subject=Check this out...&body=Link -&nbsp;" . $url . "'><span class='socicon socicon-mail'></span></a></li>";
             }
             if(get_option("wp-socialight-whatsapp") == 1)
             {
               if (wp_is_mobile()) {
-                $html = $html . "<li class='socialIcon wa'><a class='ban_popup' title='ווטסאפ' href='whatsapp://send?text=" . $title . "&nbsp;-&nbsp;" . $url . "' data-action='share/whatsapp/share'><span class='socicon socicon-whatsapp'></span></a></li>";
+                $html = $html . "<li class='socialIcon wa'><a class='ban_popup' title='Whatsapp' href='whatsapp://send?text=" . $title . "&nbsp;-&nbsp;" . $url . "' data-action='share/whatsapp/share'><span class='socicon socicon-whatsapp'></span></a></li>";
               }
             }
-              $html = $html . "<li class='hide_savvy'><a href='http://he.savvy.co.il/blog' title='סאבי בלוג - מאמריםֿ, מדריכים וטיפים על וורדפרס'>סאבי בלוג - מאמריםֿ, מדריכים וטיפים על וורדפרס</a></li>";
 
             $html = $html . "</ul></div>";
             return $html;
