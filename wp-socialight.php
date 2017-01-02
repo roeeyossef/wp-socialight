@@ -147,7 +147,6 @@ function add_wp_socialight_icons() {
                 $html = $html . "<li class='socialIcon wa'><a class='ban_popup' title='Whatsapp' href='whatsapp://send?text=" . $title . "&nbsp;-&nbsp;" . $url . "' data-action='share/whatsapp/share'><span class='socicon socicon-whatsapp'></span></a></li>";
               }
             }
-              $html = $html . "<li class='hide_savvy'><a href='http://he.savvy.co.il/blog' title='סאבי בלוג - מאמריםֿ, מדריכים וטיפים על וורדפרס'>סאבי בלוג - מאמריםֿ, מדריכים וטיפים על וורדפרס</a></li>";
 
             $html = $html . "</ul></div>";
             return $html;
